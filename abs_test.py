@@ -7,6 +7,7 @@ def my_abs(x):
     else :
         return -x
 
+
 #print('Input a num:')
 #y = int(input('input:'))
 #-9print('Input a num:'+str(y=input()))
