@@ -5,7 +5,7 @@ class Die():
 
     def __init__(self, num_sides=6):
         """骰子默认为6面"""
-        self.num_sides = 6
+        self.num_sides = num_sides
     
     def roll(self):
         """返回一个位于1到6之间的骰子面数的随机值"""
