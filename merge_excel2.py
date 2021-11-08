@@ -91,7 +91,7 @@ def get_excel_sheet(path):
     # 打开指定路径的excle表
     book = xlrd.open_workbook(path)
     # 获取excle中的表单
-    sheet = book.sheet_by_index(0)
+    sheet = book.sheet_by_index(1)
     # 返回sheet对象
     return sheet
 
@@ -102,7 +102,9 @@ def get_total_excel_sheet(path):
     :return:
     """
     book = xlrd.open_workbook(path, formatting_info=True)
-    wtbook = xlutils.copy.copy(book)
+    #print(book.nsheets)
+    #print(book.sheet_names())
+    wtbook = xlutils.copy.copy(book)    
     wtsheet = wtbook.get_sheet(0)
     return wtbook,wtsheet
 
