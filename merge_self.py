@@ -38,27 +38,18 @@ def initExcel(dest_path, sourceExcel_path,total_sheet_name):
     #获取待需合并的excel的所有文件
     excel_name_list = get_All_Excelname(sourceExcel_path)
     #第一个待合并的excel文件的路径
-    excel_path = sourceExcel_path + "/" + excel_name_list[0]
+    excel_path = sourceExcel_path + excel_name_list[0]
+    print(excel_path)
     # 获取excel的sheet
-    #excel_sheet = get_excel_sheet(excel_path)
-    e_b = app.books.open(excel_path)
+    epp = xw.App(visible=False,add_book=False)
+    e_b = epp.books.open(excel_path)
     e_s = e_b.sheets[1]
     # 获取excel表头的数据
     first_row = e_s.range('A1').expand('right').value
-    #print(first_row)
-    #print(excel_sheet)
-    #wb.sheets[0].range(1,1).expand('right').value = first_row
-    #wb.sheets[0].name = e_s.name
     #将表的名字拷贝过来
     sht.name = e_s.name
     #将表头的名字拷贝过来
     sht.range(1,1).expand('right').value = first_row
-
-    #total_rows = e_s.used_range.last_cell.row
-
-    #for i in range(2,total_rows):
-    #    line = e_s.range(f'A{i}').expand('right').value
-    #    sht.range(i,1).expand('right').value = line
 
     #保存汇总表的名字
     wb.save(dest_path)
@@ -68,6 +59,7 @@ def initExcel(dest_path, sourceExcel_path,total_sheet_name):
     e_b.close()
 
     app.quit()
+    epp.quit()
     return True
     #except Exception as e:
     #    return True
@@ -91,6 +83,14 @@ def get_All_Excelname(path):
 # 返回excel表的sheet对象
 
 def get_excel_sheet(path):
+    """[summary]
+
+    Args:
+        path ([字符串]]): [存放待合并文件]
+
+    Returns:
+        [type]: [description]
+    """
     #打开制定路径的excel表
     app = xw.App(visible=True, add_book=False)
     app.display_alerts=False
@@ -125,6 +125,7 @@ def writeExcel(destExcel_path,source_path,excelName_list):
         print("###正在合并表格《"+excel_path+"》,请稍等……")
         # 获取表的sheet对象
         e_b = app.books.open(excel_path)
+        # 默认合并的是sheet[1],不是合并sheet[0]
         e_s = e_b.sheets[1]
         #循环拷贝sheet中除首行外的各行
         for i in range(2,e_s.used_range.last_cell.row):
