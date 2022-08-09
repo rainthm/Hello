@@ -9,21 +9,24 @@ import xlwings as xw
 #   参数：
 #           string: Customers_Name_Excel 存放客户名称的文件
 #           string: Dict                 字典文件名
+#           integer:freq                  整数型文字，表示提炼多少个字词作为字典
 #   用法：
-#           python MakeDict  Customers_Name_Excel.exlx  dict.txt
+#           python MakeDict  Customers_Name_Excel.exlx  dict.txt    freq
 #
 #
 ####################################################################################
 
 #出现频次topK个最多的词汇
 #通常该值小于30，建议在生成的字典文件中进行词语调整，同时改动该值
-topK = 20
+#topK = 20
 
 
 #表格文件名
 biaogemingzi = sys.argv[1]
 #字典文件名
 zidian = sys.argv[2]
+#出现频次topK个最多的词汇
+topN = int(sys.argv[3])
 
 xlsx_sop_name = biaogemingzi
 app = xw.App(visible=False, add_book=False)
@@ -36,7 +39,7 @@ sop_customer_names = sheet_sop_name.range((2,4),(total_sop_rows,4)).value
 
 data = str(sop_customer_names)
 
-tags = jieba.analyse.extract_tags(data, topK=topK)
+tags = jieba.analyse.extract_tags(data, topK=topN)
 
 
 fW = open(zidian, 'w', encoding="utf-8")
